@@ -39,25 +39,17 @@ class VendorControllerTest {
 			Vendor.builder().firstName("FirstName2").lastName("LastName2").build(),
 			Vendor.builder().firstName("FirstName3").lastName("LastName3").build()));
 
-	webTestClient.get()
-	.uri(VendorController.BASE_URL)
-	.exchange()
-	.expectBodyList(Vendor.class)
-	.hasSize(3);
-	
+	webTestClient.get().uri(VendorController.BASE_URL).exchange().expectBodyList(Vendor.class).hasSize(3);
+
     }
 
     @Test
     void testGetById() {
-	BDDMockito.given(vendorService.getById(anyString())).willReturn(Mono.just(
-		Vendor.builder().firstName("MyName").build()));
-	
-	webTestClient.get()
-	.uri(VendorController.BASE_URL + "/1")
-	.exchange()
-	.expectBody(Vendor.class);
+	BDDMockito.given(vendorService.getById(anyString()))
+		.willReturn(Mono.just(Vendor.builder().firstName("MyName").build()));
 
-	
+	webTestClient.get().uri(VendorController.BASE_URL + "/1").exchange().expectBody(Vendor.class);
+
     }
 
 }
