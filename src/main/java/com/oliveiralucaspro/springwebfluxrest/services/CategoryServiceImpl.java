@@ -1,5 +1,6 @@
 package com.oliveiralucaspro.springwebfluxrest.services;
 
+import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Service;
 
 import com.oliveiralucaspro.springwebfluxrest.domain.Category;
@@ -23,6 +24,17 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Mono<Category> getById(String id) {
 	return categoryRepository.findById(id);
+    }
+
+    @Override
+    public Mono<Void> create(Publisher<Category> category) {
+	return categoryRepository.saveAll(category).then();
+    }
+
+    @Override
+    public Mono<Category> update(String id, Category category) {
+	category.setId(id);
+	return categoryRepository.save(category);
     }
 
 }
