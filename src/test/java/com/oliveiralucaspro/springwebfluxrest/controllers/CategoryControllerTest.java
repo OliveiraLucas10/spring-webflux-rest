@@ -1,7 +1,5 @@
 package com.oliveiralucaspro.springwebfluxrest.controllers;
 
-
-
 import static org.mockito.ArgumentMatchers.anyString;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -43,13 +41,10 @@ class CategoryControllerTest {
 
     @Test
     void testGetById() {
-	BDDMockito.given(categoryService.getById(anyString())).willReturn(Mono.just(
-		Category.builder().description("Category").build()));
-	
-	webTestClient.get()
-	.uri(CategoryController.BASE_URL + "/1")
-	.exchange()
-	.expectBody(Category.class);
+	BDDMockito.given(categoryService.getById(anyString()))
+		.willReturn(Mono.just(Category.builder().description("Category").build()));
+
+	webTestClient.get().uri(CategoryController.BASE_URL + "/1").exchange().expectBody(Category.class);
     }
 
 }
